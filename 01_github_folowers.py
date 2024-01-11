@@ -11,4 +11,18 @@ def get_github_user(username):
     return None
 
 
-print(get_github_user('Darriecha'))
+def download_avatar_user(avatar_url):
+    response = requests.get(avatar_url)
+    if response.status_code == 200:
+        # Download image
+        response_content = response.content
+        filename = 'avatar.png'
+        with open(filename, 'wb') as image:
+            image.write(response_content)
+            return filename
+    return None
+
+
+username = input('Give me an username you want to extract the information:\n')
+selected_user = get_github_user(username)
+print(download_avatar_user(selected_user.get('avatar_url')))
